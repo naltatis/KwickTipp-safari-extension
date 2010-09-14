@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>DefaultValue</key>
+		<string>tendency_odds</string>
+		<key>Key</key>
+		<string>algorithm</string>
+		<key>Secure</key>
+		<false/>
+		<key>Title</key>
+		<string>Verfahren</string>
+		<key>Titles</key>
+		<array>
+			<string>Einfacher Zufall (0:0 bis 2:2)</string>
+			<string>Populäre Bundesliga Ergebnisse</string>
+			<string>Tendenz Quoten (mybet.com)</string>
+		</array>
+		<key>Type</key>
+		<string>RadioButtons</string>
+		<key>Values</key>
+		<array>
+			<string>random</string>
+			<string>frequency</string>
+			<string>tendency_odds</string>
+		</array>
+	</dict>
+</array>
+</plist>
