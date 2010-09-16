@@ -3,7 +3,11 @@ KwickTipp
 
 This safari extension supports you with you weekly [kicktipp.de](http://www.kicktipp.de) soccer result predictions. It repopulates the you entry form based on **current odds**, **historical results** or fills it **purely random**.
 
-strategies & algorithms
+Download & Install
+------------------
+You can get the extension from the [download section](http://github.com/naltatis/KwickTipp-safari-extension/downloads) or clone the repository and open it in safaris extension builder.
+
+Strategies & Algorithms
 -----------------------
 
 ### simple random ###
