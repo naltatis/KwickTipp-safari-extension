@@ -28,6 +28,8 @@ function fill(host, guest, result) {
 	}
 }
 
+safari.self.tab.dispatchMessage("pageload");
+
 safari.self.addEventListener("message", function(event) {
 	if(event.name == "scan")
 		scan();

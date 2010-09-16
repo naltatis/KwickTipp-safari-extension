@@ -26,5 +26,15 @@
 			<string>tendency_odds</string>
 		</array>
 	</dict>
+	<dict>
+		<key>Key</key>
+		<string>group</string>
+		<key>Secure</key>
+		<false/>
+		<key>Title</key>
+		<string>Tipprunde</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
 </array>
 </plist>

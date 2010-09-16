@@ -1,11 +1,17 @@
-var kicktippUrl = "http://www.kicktipp.de/neuland-bfi/tippabgabe";
-
 var estimator;
 
 function button(event) {
-	estimator = undefined;
-	safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("scan");
-	//event.target.browserWindow.activeTab.url = kicktippUrl;
+	
+	var url = safari.application.activeBrowserWindow.activeTab.url;
+
+	if(url && url.match(/kicktipp.de\/.*\/tippabgabe/)) {
+		estimator = undefined;
+		safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("scan");		
+	} else {
+		var group = safari.extension.settings.group;
+		if(group)
+			safari.application.activeBrowserWindow.activeTab.url = "http://www.kicktipp.de/"+group+"/tippabgabe";		
+	}
 }
 
 function message(event) {
@@ -16,11 +22,17 @@ function message(event) {
 			result: estimate_result(event.message.host, event.message.guest)
 		};
 		safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("result_response", message);
+		
+	} else if(event.name == "pageload") {
+		var parts = safari.application.activeBrowserWindow.activeTab.url.match(/kicktipp.de\/(.*)\/tippabgabe/);
+		console.log(parts);
+		if(parts && parts.length == 2)
+			safari.extension.settings.group = parts[1];
 	}
 }
 
 function estimate_result(home, guest) {
-	if(estimator == undefined) {
+	if(estimator == undefined) {		
 		switch (safari.extension.settings.algorithm) {
 		  case "random":
 		    estimator = new Random();
@@ -92,13 +104,16 @@ var Frequency = Class.extend({
 				return i
 		}
 	},
-	sum: function() {
+	sum: function(options) {
 		var sum = 0;
 		for(var i in this.history) {
-			sum += this.history[i];
+			sum += this.weight(i, options);
 		}
-		return sum;
-	}
+		return sum;		
+	},
+	weight: function(result) {
+		return this.history[result];
+	},
 });
 
 var Mybet = Frequency.extend({
@@ -108,11 +123,8 @@ var Mybet = Frequency.extend({
 	},
 	estimate: function(home, guest) {
 		var odds = this.findOdds(home, guest);
-		if(!odds) {
+		if(!odds)
 			console.log("no odds found for",home, guest);
-			console.log("falling back to frequency based algorithm");
-			return this._super(home, guest);
-		}
 		var rand = Math.round(Math.random()*this.sum(odds)-1);
 		var sum = 0;
 		for(var i in this.history) {
@@ -129,16 +141,14 @@ var Mybet = Frequency.extend({
 		});
 		return result;
 	},
-	sum: function(odds) {
-		var sum = 0;
-		for(var i in this.history) {
-			sum += this.weight(i, odds);
-		}
-		return sum;		
-	},
 	weight: function(result, odds) {
+		var frequency = this.history[result];
+		
+		if(!odds)
+			return this._super(result);
+		
 		var type = this.resultType(result);
-		return Math.round(this.history[result] * this.factor / parseFloat(odds[type]));
+		return Math.round(frequency * this.factor / parseFloat(odds[type]));
 	},
 	resultType: function(result) {
 		var part = result.split(":");

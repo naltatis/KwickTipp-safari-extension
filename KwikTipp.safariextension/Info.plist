@@ -11,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.2</string>
+	<string>0.3</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>Chrome</key>
@@ -44,6 +44,8 @@
 			</array>
 		</dict>
 	</dict>
+	<key>Description</key>
+	<string>kicktipp.de Tipp Helfer</string>
 	<key>ExtensionInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>Permissions</key>
@@ -63,6 +65,6 @@
 		</dict>
 	</dict>
 	<key>Website</key>
-	<string>http://geers.tv/kwiktipp</string>
+	<string>http://github.com/naltatis/KwickTipp-safari-extension</string>
 </dict>
 </plist>
